@@ -1,3 +1,5 @@
+import AlignmentInput from '../components/AlignmentInput'
+
 export default {
     title: 'Block Content',
     name: 'blockContent',
@@ -13,8 +15,26 @@ export default {
                 { title: 'H3', value: 'h3' },
                 { title: 'H4', value: 'h4' },
                 { title: 'Quote', value: 'blockquote' },
+                { title: 'Center', value: 'center' },
+                { title: 'Right', value: 'right' },
             ],
             lists: [{ title: 'Bullet', value: 'bullet' }],
+            /* Add an inspector field so editors can pick alignment per block */
+            fields: [
+                {
+                    name: 'textAlign',
+                    title: 'Text alignment',
+                    type: 'string',
+                    components: { input: AlignmentInput },
+                    options: {
+                        list: [
+                            { title: 'Left', value: 'left' },
+                            { title: 'Center', value: 'center' },
+                            { title: 'Right', value: 'right' },
+                        ],
+                    },
+                },
+            ],
             marks: {
                 decorators: [
                     { title: 'Strong', value: 'strong' },
