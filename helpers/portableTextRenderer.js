@@ -7,19 +7,20 @@ export const PortableTextComponents = {
   block: {
     // fallback for normal/heading/quote; we check for textAlign first
     normal: ({children, value}) => {
+      // prefer explicit textAlign if present, otherwise fall back to style (center/right)
       const align = value?.textAlign || (value?.style === 'center' ? 'center' : value?.style === 'right' ? 'right' : 'left')
       return <p style={{textAlign: align}}>{children}</p>
     },
     h1: ({children, value}) => {
-      const align = value?.textAlign || 'left'
+      const align = value?.textAlign || (value?.style === 'center' ? 'center' : value?.style === 'right' ? 'right' : 'left')
       return <h1 style={{textAlign: align}}>{children}</h1>
     },
     h2: ({children, value}) => {
-      const align = value?.textAlign || 'left'
+      const align = value?.textAlign || (value?.style === 'center' ? 'center' : value?.style === 'right' ? 'right' : 'left')
       return <h2 style={{textAlign: align}}>{children}</h2>
     },
     blockquote: ({children, value}) => {
-      const align = value?.textAlign || 'left'
+      const align = value?.textAlign || (value?.style === 'center' ? 'center' : value?.style === 'right' ? 'right' : 'left')
       return <blockquote style={{textAlign: align}}>{children}</blockquote>
     },
   },
