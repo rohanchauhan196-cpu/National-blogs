@@ -41,9 +41,9 @@ export default {
     {
       name: 'description',
       title: 'Description',
-      type: 'text',
+      type: 'blockContent',
       validation: (Rule) => Rule.required(),
-      description: 'Detailed job description explaining responsibilities and role',
+      description: 'Detailed job description — supports rich text, lists and formatting',
     },
     {
       name: 'requirements',
