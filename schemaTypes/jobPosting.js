@@ -45,6 +45,7 @@ export default {
       validation: (Rule) => Rule.required(),
       description: 'Detailed job description explaining responsibilities and role',
     },
+    { name: 'seo', title: 'SEO', type: 'seo' },
     {
       name: 'requirements',
       title: 'Requirements',

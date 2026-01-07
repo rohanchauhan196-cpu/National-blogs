@@ -5,5 +5,7 @@ import author from './author'
 import service from './service'
 import jobPosting from './jobPosting'
 import seo from './seo'
+import page from './page'
+import siteSettings from './siteSettings'
 
-export const schemaTypes = [post, author, category, service, jobPosting, blockContent, seo]
+export const schemaTypes = [post, author, category, service, jobPosting, blockContent, seo, page, siteSettings]
