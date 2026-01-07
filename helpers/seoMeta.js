@@ -1,12 +1,25 @@
 // helpers/seoMeta.js
 // Utility to merge page-level SEO with site defaults and return meta tag values
 
+function truncate(str, n) {
+  if (typeof str !== 'string') return ''
+  return str.length > n ? str.slice(0, n) : str
+}
+
 export function mergeSeo(pageSeo = {}, siteSeo = {}) {
-  return {
+  const merged = {
     title: pageSeo.title || siteSeo.title || '',
     description: pageSeo.description || siteSeo.description || '',
     keywords: (pageSeo.keywords && pageSeo.keywords.length) ? pageSeo.keywords : (siteSeo.keywords || []),
     image: (pageSeo.image && pageSeo.image.asset?.url) ? pageSeo.image.asset.url : (siteSeo.image && siteSeo.image.asset?.url) ? siteSeo.image.asset.url : null,
+  }
+
+  // enforce recommended lengths
+  return {
+    title: truncate(merged.title, 60),
+    description: truncate(merged.description, 160),
+    keywords: merged.keywords,
+    image: merged.image,
   }
 }
 
@@ -24,10 +37,3 @@ export function generateMetaTags(seo) {
   }
 }
 
-// Usage example / GROQ hints:
-// Query a page and site defaults together in one request:
-// {
-//  "page": *[_type == "page" && slug.current == $slug][0]{title, seo{title, description, keywords, image{asset->{_id, url}}}},
-//  "site": *[_type == "siteSettings"][0]{seo{title, description, keywords, image{asset->{_id, url}}}}
-// }
-// Then: const merged = mergeSeo(page.seo, site.seo); const tags = generateMetaTags(merged)
