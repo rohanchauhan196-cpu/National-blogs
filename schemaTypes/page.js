@@ -45,9 +45,15 @@ export default {
           const { document, getClient } = context || {}
           if (!getClient) return true // cannot validate in this environment
           const client = getClient({ apiVersion: '2023-05-10' })
-          const id = document?._id
-          const query = '*[_type == "page" && slug == $slug && _id != $id][0]._id'
-          const exists = await client.fetch(query, { slug: value, id })
+
+          // normalize IDs so the validator ignores both draft and published versions of THIS document
+          const draftId = document?._id || ''
+          const publishedId = draftId.replace(/^drafts\./, '')
+
+          // find any OTHER document with the same slug (excluding this draft and its published doc)
+          const query = '*[_type == "page" && slug == $slug && !(_id in [$draftId, $publishedId])][0]._id'
+          const exists = await client.fetch(query, { slug: value, draftId, publishedId })
+
           return exists ? 'A page with this value already exists — edit that document instead.' : true
         }),
       // Lock selection after the document is created in the dataset (prevents accidental reassignments)
