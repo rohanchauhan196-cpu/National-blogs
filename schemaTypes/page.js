@@ -8,7 +8,7 @@ export default {
       name: 'slug',
       title: 'Page',
       type: 'string',
-      description: 'Select which static page this document represents.',
+      description: 'Select which static page this document represents. Create one document per page; once saved the selection will be locked to avoid accidental overwrites.',
       options: {
         list: [
           { title: 'Home Page', value: 'home' },
@@ -39,7 +39,19 @@ export default {
           { title: 'Diabetic Profile', value: 'diabetic-profile' },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom(async (value, context) => {
+          if (!value) return true
+          const { document } = context
+          // Check for other pages with same slug
+          const exists = await context.client.fetch(
+            '*[_type == "page" && slug == $slug && _id != $id][0]._id',
+            { slug: value, id: document?._id }
+          )
+          return exists ? 'A page with this value already exists — edit that document instead.' : true
+        }),
+      // Lock selection after first save so switching does not move data between pages
+      readOnly: ({ document }) => Boolean(document?.slug),
     },
     { 
       name: 'content', 
