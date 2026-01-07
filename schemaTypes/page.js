@@ -42,16 +42,16 @@ export default {
       validation: (Rule) =>
         Rule.required().custom(async (value, context) => {
           if (!value) return true
-          const { document } = context
-          // Check for other pages with same slug
-          const exists = await context.client.fetch(
-            '*[_type == "page" && slug == $slug && _id != $id][0]._id',
-            { slug: value, id: document?._id }
-          )
+          const { document, getClient } = context || {}
+          if (!getClient) return true // cannot validate in this environment
+          const client = getClient({ apiVersion: '2023-05-10' })
+          const id = document?._id
+          const query = '*[_type == "page" && slug == $slug && _id != $id][0]._id'
+          const exists = await client.fetch(query, { slug: value, id })
           return exists ? 'A page with this value already exists — edit that document instead.' : true
         }),
-      // Lock selection after first save so switching does not move data between pages
-      readOnly: ({ document }) => Boolean(document?.slug),
+      // Lock selection after the document is created in the dataset (prevents accidental reassignments)
+      readOnly: ({ document }) => Boolean(document?._createdAt),
     },
     { 
       name: 'content', 
