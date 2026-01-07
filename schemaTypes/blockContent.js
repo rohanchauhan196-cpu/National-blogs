@@ -16,11 +16,17 @@ export default {
                 { title: 'Center', value: 'center' },
                 { title: 'Right', value: 'right' },
             ],
-            lists: [{ title: 'Bullet', value: 'bullet' }],
+            lists: [
+                { title: 'Bullet', value: 'bullet' },
+                { title: 'Numbered', value: 'number' },
+            ],
             marks: {
                 decorators: [
                     { title: 'Strong', value: 'strong' },
                     { title: 'Emphasis', value: 'em' },
+                    { title: 'Underline', value: 'underline' },
+                    { title: 'Code', value: 'code' },
+                    { title: 'Strike-through', value: 'strike-through' },
                 ],
                 annotations: [
                     {
@@ -33,6 +39,21 @@ export default {
                                 name: 'href',
                                 type: 'url',
                             },
+                            {
+                                title: 'Open in new tab',
+                                name: 'blank',
+                                type: 'boolean',
+                            },
+                        ],
+                    },
+                    {
+                        title: 'Internal link',
+                        name: 'internalLink',
+                        type: 'object',
+                        fields: [
+                            { name: 'reference', title: 'Reference', type: 'reference', to: [
+                                { type: 'post' }, { type: 'page' }, { type: 'service' }, { type: 'package' }
+                            ] },
                         ],
                     },
                 ],
@@ -41,6 +62,10 @@ export default {
         {
             type: 'image',
             options: { hotspot: true },
+            fields: [
+                { name: 'alt', title: 'Alternative text', type: 'string', description: 'Important for accessibility' },
+                { name: 'caption', title: 'Caption', type: 'string' },
+            ],
         },
     ],
 }
