@@ -41,7 +41,21 @@ export default {
       },
       validation: (Rule) => Rule.required(),
     },
-    { name: 'content', title: 'Content', type: 'blockContent' },
+    { 
+      name: 'content', 
+      title: 'Content', 
+      type: 'blockContent',
+      description: 'Visible for pages that have editable content (home, about, contact, services, packages, blog, careers, policies, service categories, and individual packages).',
+      hidden: ({document}) => {
+        const page = document?.slug
+        const pagesWithContent = [
+          'home','about','contact','all-services','packages','blog','careers','privacy-policy','refund-policy',
+          'services-pathology','services-radiology','services-cardiology',
+          'health-panel-whole-body','preventive-comprehensive','preventive-comprehensive-plus','routine-health','fever-basic','fever-advance','fever-panel-i','extended-iron-profile','basic-iron-profile','diabetic-profile',
+        ]
+        return !pagesWithContent.includes(page)
+      }
+    },
     { name: 'seo', title: 'SEO', type: 'seo' },
   ],
   preview: {
