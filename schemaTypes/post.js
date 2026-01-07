@@ -10,6 +10,7 @@ export default {
         { name: 'categories', title: 'Categories', type: 'array', of: [{ type: 'reference', to: { type: 'category' } }] },
         { name: 'publishedAt', title: 'Published at', type: 'datetime' },
         { name: 'excerpt', title: 'Excerpt', type: 'text', description: 'Short summary for the blog card' },
+        { name: 'seo', title: 'SEO', type: 'seo' },
         { name: 'body', title: 'Body', type: 'blockContent' },
     ],
 }

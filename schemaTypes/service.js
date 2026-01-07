@@ -8,6 +8,7 @@ export default {
     { name: 'mainImage', title: 'Main image', type: 'image', options: { hotspot: true } },
     { name: 'shortDescription', title: 'Short description', type: 'text', description: 'Short summary (3-4 lines) for services listing' },
     { name: 'description', title: 'Description', type: 'text', description: 'Detailed description for the service page' },
+    { name: 'seo', title: 'SEO', type: 'seo' },
     {
       name: 'tests',
       title: 'Tests',
