@@ -11,12 +11,14 @@
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "seed:pages": "node scripts/seedPages.js",
-    "migrate:jobs:desc": "node scripts/migrateJobDescriptions.js"
+    "migrate:jobs:desc": "node scripts/migrateJobDescriptions.js",
+    "migrate:posts:body": "node scripts/migratePostBodies.js"
   },
   "keywords": [
     "sanity"
   ],
   "dependencies": {
+    "@sanity/client": "^7.14.0",
     "@sanity/vision": "^5.1.0",
     "react": "^19.1",
     "react-dom": "^19.1",
